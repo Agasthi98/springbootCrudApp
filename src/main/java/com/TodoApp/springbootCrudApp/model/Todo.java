@@ -1,4 +1,4 @@
-package model;
+package com.TodoApp.springbootCrudApp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
