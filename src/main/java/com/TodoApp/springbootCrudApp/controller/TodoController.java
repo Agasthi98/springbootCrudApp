@@ -13,11 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("api/")
 public class TodoController {
 
     @Autowired
     private TodoRepository todoRepo;
 
+    @CrossOrigin
     @GetMapping("/todos")
     public ResponseEntity<?> getAllTodos() {
         List<Todo> todos = todoRepo.findAll();
@@ -28,6 +30,7 @@ public class TodoController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/todos")
     public ResponseEntity<?> createTodo(@RequestBody Todo todo) {
         try{
@@ -39,6 +42,7 @@ public class TodoController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/todos/{id}")
     public ResponseEntity<?> getSingleTodo(@PathVariable("id") String id) {
        Optional<Todo> todoOptional =  todoRepo.findById(id);
@@ -49,6 +53,7 @@ public class TodoController {
        }
     }
 
+    @CrossOrigin
     @PutMapping("/todos/{id}")
     public ResponseEntity<?> updateById(@PathVariable("id") String id, @RequestBody Todo todo) {
         Optional<Todo> todoOptional = todoRepo.findById(id);
@@ -56,12 +61,22 @@ public class TodoController {
             Todo todoToSave = todoOptional.get();
             todoToSave.setCompleted(todo.getCompleted() != null ? todo.getCompleted() : todoToSave.getCompleted());
             todoToSave.setTodo(todo.getTodo() != null ? todo.getTodo() : todoToSave.getTodo());
-            todoToSave.setDescription(todo.getDescription() != null ? todo.getDescription() : todoToSave.getDescription());
             todoToSave.setUpdatedAt(new Date(System.currentTimeMillis()));
             todoRepo.save(todoToSave);
             return new ResponseEntity<>(todoToSave, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Todo not found with id" +id, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/todos/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
+        try{
+            todoRepo.deleteById(id);
+            return new ResponseEntity<>("Successfully deleted :"+id, HttpStatus.OK);
+    }catch(Exception e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
