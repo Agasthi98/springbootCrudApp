@@ -1,7 +1,7 @@
 package com.TodoApp.springbootCrudApp.controller;
 
 
-import com.TodoApp.springbootCrudApp.model.Todo;
+import com.TodoApp.springbootCrudApp.domain.Todo;
 import com.TodoApp.springbootCrudApp.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

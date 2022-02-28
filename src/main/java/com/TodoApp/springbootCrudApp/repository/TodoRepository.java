@@ -1,7 +1,7 @@
 package com.TodoApp.springbootCrudApp.repository;
 
 
-import com.TodoApp.springbootCrudApp.model.Todo;
+import com.TodoApp.springbootCrudApp.domain.Todo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
