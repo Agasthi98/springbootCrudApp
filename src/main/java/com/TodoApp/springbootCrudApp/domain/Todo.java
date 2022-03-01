@@ -1,14 +1,11 @@
 package com.TodoApp.springbootCrudApp.domain;
 
-
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.Date;
+
+
 @Document(collection = "todos" )
-
-
 public class Todo {
 
     @Id
@@ -17,6 +14,14 @@ public class Todo {
     private String completed;
     private Date createdAt;
     private Date updatedAt;
+
+    public Todo(String id, String todo, String completed, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.todo = todo;
+        this.completed = completed;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     public void setId(String id) {
         this.id = id;
