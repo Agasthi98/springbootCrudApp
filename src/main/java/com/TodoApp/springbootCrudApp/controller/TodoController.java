@@ -53,6 +53,10 @@ public class TodoController {
 //        }
 //    }
 
+    @GetMapping("/todos/{id}")
+    public ResponseEntity<Todo> getTodoById(@PathVariable String id){
+        return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
+    }
 
 //    @GetMapping("/todos/{id}")
 //    public ResponseEntity<?> getSingleTodo(@PathVariable("id") String id) {
@@ -80,6 +84,16 @@ public class TodoController {
 //        }
 //    }
 
+    @DeleteMapping("/todos/{id}")
+    public void deleteTodo(@PathVariable String id){
+        try{
+            todoService.deleteTodo(id);
+            System.out.println("Successfully deleted :" +id);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
 //    @CrossOrigin
 //    @DeleteMapping("/todos/{id}")
 //    public ResponseEntity<?> deleteById(@PathVariable("id") String id) {

@@ -9,8 +9,10 @@ public interface TodoService {
 
     Todo updateTodo(String id, Todo todos);
 
-    Void deleteTodo(String id);
+    void deleteTodo(String id);
 
     List<Todo> getAllTodos();
+
+    Todo getTodoById(String id);
 
 }
