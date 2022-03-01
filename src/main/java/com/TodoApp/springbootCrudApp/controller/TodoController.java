@@ -32,6 +32,15 @@ public class TodoController {
         }
     }
 
+      @PostMapping("/todos")
+      public ResponseEntity<?> createTodo(@RequestBody Todo todos){
+        try{
+            todos.setCreatedAt(new Date(System.currentTimeMillis()));
+            return new ResponseEntity<Todo>(todoService.createTodo(todos), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+      }
 
 //    @PostMapping("/todos")
 //    public ResponseEntity<?> createTodo(@RequestBody Todo todo) {
