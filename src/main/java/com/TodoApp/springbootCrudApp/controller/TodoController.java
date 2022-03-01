@@ -42,47 +42,11 @@ public class TodoController {
         }
       }
 
-//    @PostMapping("/todos")
-//    public ResponseEntity<?> createTodo(@RequestBody Todo todo) {
-//        try{
-//            todo.setCreatedAt(new Date(System.currentTimeMillis()));
-//            todoRepo.save(todo);
-//            return new ResponseEntity<Todo>(todo, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return  new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @GetMapping("/todos/{id}")
     public ResponseEntity<Todo> getTodoById(@PathVariable String id){
         return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
     }
 
-//    @GetMapping("/todos/{id}")
-//    public ResponseEntity<?> getSingleTodo(@PathVariable("id") String id) {
-//       Optional<Todo> todoOptional =  todoRepo.findById(id);
-//       if(todoOptional.isPresent()) {
-//           return new ResponseEntity<>(todoOptional.get(), HttpStatus.OK);
-//       } else {
-//           return new ResponseEntity<>("Todo not found with id" +id, HttpStatus.NOT_FOUND);
-//       }
-//    }
-
-
-//    @PutMapping("/todos/{id}")
-//    public ResponseEntity<?> updateById(@PathVariable("id") String id, @RequestBody Todo todo) {
-//        Optional<Todo> todoOptional = todoRepo.findById(id);
-//        if(todoOptional.isPresent()) {
-//            Todo todoToSave = todoOptional.get();
-//            todoToSave.setCompleted(todo.getCompleted() != null ? todo.getCompleted() : todoToSave.getCompleted());
-//            todoToSave.setTodo(todo.getTodo() != null ? todo.getTodo() : todoToSave.getTodo());
-//            todoToSave.setUpdatedAt(new Date(System.currentTimeMillis()));
-//            todoRepo.save(todoToSave);
-//            return new ResponseEntity<>(todoToSave, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Todo not found with id" +id, HttpStatus.NOT_FOUND);
-//        }
-//    }
 
     @PutMapping("/todos/{id}")
     public ResponseEntity<Todo> updateTodo(@PathVariable("id") String id, @RequestBody Todo todos){
@@ -99,15 +63,6 @@ public class TodoController {
         }
 
     }
-//    @CrossOrigin
-//    @DeleteMapping("/todos/{id}")
-//    public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
-//        try{
-//            todoRepo.deleteById(id);
-//            return new ResponseEntity<>("Successfully deleted :"+id, HttpStatus.OK);
-//    }catch(Exception e){
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-//        }
-//    }
+
 
 }
