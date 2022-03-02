@@ -1,19 +1,19 @@
 package com.TodoApp.springbootCrudApp.controller;
 
 
+import com.TodoApp.springbootCrudApp.constant.Api;
 import com.TodoApp.springbootCrudApp.domain.Todo;
 import com.TodoApp.springbootCrudApp.service.TodoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping(Api.API_BASE_URL + Api.TODO_PATH)
 public class TodoController {
 
     private final TodoService todoService;
@@ -23,7 +23,7 @@ public class TodoController {
     }
 
 
-    @GetMapping("/todos")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Todo>> getAllTodos() {
         if(todoService.getAllTodos().size() > 0){
             return new ResponseEntity<>(todoService.getAllTodos(), HttpStatus.OK);
@@ -32,7 +32,7 @@ public class TodoController {
         }
     }
 
-      @PostMapping("/todos")
+      @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
       public ResponseEntity<?> createTodo(@RequestBody Todo todos){
         try{
             todos.setCreatedAt(new Date(System.currentTimeMillis()));
@@ -42,27 +42,26 @@ public class TodoController {
         }
       }
 
-    @GetMapping("/todos/{id}")
+    @GetMapping(path = Api.TODO_ID_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Todo> getTodoById(@PathVariable String id){
         return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
     }
 
 
-    @PutMapping("/todos/{id}")
+    @PutMapping(path = Api.TODO_ID_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Todo> updateTodo(@PathVariable("id") String id, @RequestBody Todo todos){
         return new ResponseEntity<>(todoService.updateTodo(id, todos), HttpStatus.OK);
     }
 
-    @DeleteMapping("/todos/{id}")
+    @DeleteMapping(path = Api.TODO_ID_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteTodo(@PathVariable String id){
         try{
             todoService.deleteTodo(id);
-            System.out.println("Successfully deleted :" +id);
+            System.out.println("Successfully deleted : " +id);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
 
     }
-
 
 }
