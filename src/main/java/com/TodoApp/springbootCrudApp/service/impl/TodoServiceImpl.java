@@ -1,8 +1,12 @@
 package com.TodoApp.springbootCrudApp.service.impl;
 
+import com.TodoApp.springbootCrudApp.constant.ExceptionMessages;
 import com.TodoApp.springbootCrudApp.domain.Todo;
+import com.TodoApp.springbootCrudApp.exception.NotFoundException;
 import com.TodoApp.springbootCrudApp.repository.TodoRepository;
 import com.TodoApp.springbootCrudApp.service.TodoService;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -33,7 +37,7 @@ public class TodoServiceImpl implements TodoService {
             todoSave.setUpdatedAt(new Date(System.currentTimeMillis()));
             return todoRepository.save(todoSave);
         } else{
-            return null;
+            throw new NotFoundException(ExceptionMessages.TODO_DOES_NOT_EXISTS);
         }
     }
 
@@ -53,7 +57,7 @@ public class TodoServiceImpl implements TodoService {
         if(todoOptional.isPresent()){
             return todoOptional.get();
         } else {
-            return null;
+            throw new NotFoundException(ExceptionMessages.TODO_DOES_NOT_EXISTS);
         }
     }
 
