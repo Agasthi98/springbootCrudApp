@@ -1,65 +1,21 @@
 package com.TodoApp.springbootCrudApp.domain;
 
-import org.springframework.data.annotation.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.Date;
 
 
+
+@Builder
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "todos" )
-public class Todo {
+public class Todo extends BaseEntity {
 
-    @Id
     private String id;
     private String todo;
-    private String completed;
-    private Date createdAt;
-    private Date updatedAt;
-
-    public Todo(String id, String todo, String completed, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.todo = todo;
-        this.completed = completed;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setTodo(String todo) {
-        this.todo = todo;
-    }
-
-    public void setCompleted(String completed) {
-        this.completed = completed;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getTodo() {
-        return todo;
-    }
-
-    public String getCompleted() {
-        return completed;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+    private Boolean completed;
 }
