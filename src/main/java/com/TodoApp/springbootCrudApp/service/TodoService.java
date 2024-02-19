@@ -12,11 +12,11 @@ public interface TodoService {
 
     Todo updateTodo(String id, Todo todos);
 
-    void deleteTodo(String id);
+    BaseDetailsResponse<HashMap<String,Object>> deleteTodo(String id);
 
 //    List<Todo> getAllTodos();
     BaseDetailsResponse<HashMap<String, Object>> getAllTodos();
 
-    Todo getTodoById(String id);
+    BaseDetailsResponse<HashMap<String,Object>> getTodoById(String id);
 
 }

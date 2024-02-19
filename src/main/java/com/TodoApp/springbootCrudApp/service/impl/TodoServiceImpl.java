@@ -73,8 +73,20 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public void deleteTodo(String id) {
-        todoRepository.deleteById(id);
+    public BaseDetailsResponse<HashMap<String,Object>> deleteTodo(String id) {
+        try {
+            todoRepository.deleteById(id);
+
+            return BaseDetailsResponse.<HashMap<String, Object>>builder()
+                    .code(200)
+                    .message("Deleted")
+                    .build();
+        } catch (Exception e) {
+            return BaseDetailsResponse.<HashMap<String, Object>>builder()
+                    .code(500)
+                    .message("Error")
+                    .build();
+        }
     }
 
     @Override
@@ -87,7 +99,7 @@ public class TodoServiceImpl implements TodoService {
 
                 return BaseDetailsResponse.<HashMap<String, Object>>builder()
                         .code(200)
-                        .message("Get money requests details success")
+                        .message("Get all list success")
                         .data(data)
                         .build();
             } else {
@@ -107,10 +119,16 @@ public class TodoServiceImpl implements TodoService {
 
 
     @Override
-    public Todo getTodoById(String id) {
+    public BaseDetailsResponse<HashMap<String,Object>> getTodoById(String id) {
         Optional<Todo> todoOptional = todoRepository.findById(id);
         if (todoOptional.isPresent()) {
-            return todoOptional.get();
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("sent_requests", todoOptional.get());
+            return BaseDetailsResponse.<HashMap<String, Object>>builder()
+                    .code(200)
+                    .message("Get by id success")
+                    .data(data)
+                    .build();
         } else {
             throw new NotFoundException(ExceptionMessages.TODO_DOES_NOT_EXISTS);
         }
@@ -120,5 +138,7 @@ public class TodoServiceImpl implements TodoService {
         Query query = new Query(Criteria.where("todo").is(uniqueField)).limit(1);
         return mongoTemplate.findOne(query, Todo.class);
     }
+
+
 }
 

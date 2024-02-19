@@ -33,12 +33,6 @@ public class TodoController {
         } else{
             return ResponseEntity.badRequest().body(DefaultResponse.error(response.getMessage()));
         }
-//        else if(response.getCode() == 500){
-//            return ResponseEntity.internalServerError().body(DefaultResponse.internalServerError( response.getMessage()));
-//        }else{
-//            return ResponseEntity.badRequest().body(DefaultResponse.error(response.getMessage()));
-//        }
-
     }
 
       @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,8 +46,13 @@ public class TodoController {
       }
 
     @GetMapping(path = Api.TODO_ID_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Todo> getTodoById(@PathVariable String id){
-        return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
+    public ResponseEntity<DefaultResponse> getTodoById(@PathVariable String id){
+        BaseDetailsResponse<HashMap<String,Object>> response = todoService.getTodoById(id);
+        if(response.getCode() == 200){
+            return ResponseEntity.ok(DefaultResponse.success(response.getMessage(), response.getData()));
+        } else{
+            return ResponseEntity.badRequest().body(DefaultResponse.error(response.getMessage()));
+        }
     }
 
 
@@ -63,12 +62,12 @@ public class TodoController {
     }
 
     @DeleteMapping(path = Api.TODO_ID_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteTodo(@PathVariable String id){
-        try{
-            todoService.deleteTodo(id);
-            System.out.println("Successfully deleted : " +id);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+    public ResponseEntity<DefaultResponse> deleteTodo(@PathVariable String id){
+        BaseDetailsResponse<HashMap<String,Object>> response = todoService.deleteTodo(id);
+        if(response.getCode() == 200){
+            return ResponseEntity.ok(DefaultResponse.success(response.getMessage(), response.getData()));
+        } else{
+            return ResponseEntity.badRequest().body(DefaultResponse.error(response.getMessage()));
         }
 
     }
